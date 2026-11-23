@@ -1,0 +1,174 @@
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+
+    .calculator {
+      border-radius: 8px;
+      padding: 24px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .screen {
+      height: 90px;
+      width: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 16px;
+      font-size: 2.25rem;
+      overflow-x: auto;
+    }
+
+    .keypad {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .btn {
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
+
+    body.theme-1 {
+      background-image: url('https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?q=80&w=2070&auto=format&fit=crop');
+    }
+    body.theme-1 .calculator {
+      background-color: #d1d5db;
+      border: 2px solid #6b7280;
+    }
+    body.theme-1 .screen {
+      background-color: #9ca3af;
+      border: 2px solid #4b5563;
+      color: #1f2937;
+    }
+    body.theme-1 .btn-num {
+      background-color: #f98844;
+      border: 1.5px solid #374151;
+      color: #2b7a8c;
+    }
+    body.theme-1 .btn-op {
+      background-color: #fbb054;
+      border: 1.5px solid #374151;
+      color: #2b7a8c;
+    }
+
+    body.theme-2 {
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2070&auto=format&fit=crop');
+    }
+    body.theme-2 .calculator {
+      background-color: #0f172a;
+      border: 2px solid #334155;
+    }
+    body.theme-2 .screen {
+      background-color: #1e293b;
+      border: 2px solid #475569;
+      color: #38bdf8;
+    }
+    body.theme-2 .btn-num {
+      background-color: #0284c7;
+      border: 1.5px solid #0369a1;
+      color: #ffffff;
+    }
+    body.theme-2 .btn-op {
+      background-color: #06b6d4;
+      border: 1.5px solid #0891b2;
+      color: #0f172a;
+    }
+
+    body.theme-3 {
+      background-image: url('https://images.news18.com/ibnlive/uploads/2023/03/international-day-of-forests-2023-167914152316x9.jpg');
+    }
+    body.theme-3 .calculator {
+      background-color: #14532d;
+      border: 2px solid #166534;
+
+    }
+    body.theme-3 .screen {
+      background-color: #052e16;
+      border: 2px solid #14532d;
+      color: #86efac;
+    }
+    body.theme-3 .btn-num {
+      background-color: #22c55e;
+      border: 1.5px solid #15803d;
+      color: #052e16;
+    }
+    body.theme-3 .btn-op {
+      background-color: #eab308;
+      border: 1.5px solid #ca8a04;
+      color: #422006;
+    }
+
+    .theme-switcher {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      padding: 6px 12px;
+    }
+
+    .theme-btn {
+      background: transparent;
+      border: none;
+      color: #d1d5db;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .theme-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .theme-btn.active {
+      background: #ffffff;
+      color: #111827;
+      font-weight: bold;
+    }

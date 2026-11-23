@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href='Summative3.css'></link>
+  <title>Calculator</title>
+   </head>
+
+<body class="theme-1">
+
+  <div class="calculator">
+
+    <div class="screen" id="display">0</div>
+
+    <div class="keypad">
+      <div class="row">
+        <div class="btn btn-op" onclick="handlePress('C')">AC</div>
+        <div class="btn btn-op" onclick="handlePress('DEL')">DEL</div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <div class="row">
+        <div class="btn btn-num" onclick="handlePress('7')">7</div>
+        <div class="btn btn-num" onclick="handlePress('8')">8</div>
+        <div class="btn btn-num" onclick="handlePress('9')">9</div>
+        <div class="btn btn-op" onclick="handlePress('÷')">÷</div>
+      </div>
+
+      <div class="row">
+        <div class="btn btn-num" onclick="handlePress('4')">4</div>
+        <div class="btn btn-num" onclick="handlePress('5')">5</div>
+        <div class="btn btn-num" onclick="handlePress('6')">6</div>
+        <div class="btn btn-op" onclick="handlePress('x')">x</div>
+      </div>
+
+      <div class="row">
+        <div class="btn btn-num" onclick="handlePress('1')">1</div>
+        <div class="btn btn-num" onclick="handlePress('2')">2</div>
+        <div class="btn btn-num" onclick="handlePress('3')">3</div>
+        <div class="btn btn-op" onclick="handlePress('-')">-</div>
+      </div>
+
+      <div class="row">
+        <div class="btn btn-op" onclick="handlePress('.')">.</div>
+        <div class="btn btn-num" onclick="handlePress('0')">0</div>
+        <div class="btn btn-op" onclick="handlePress('=')">=</div>
+        <div class="btn btn-op" onclick="handlePress('+')">+</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="theme-switcher">
+    <button class="theme-btn active" onclick="setTheme('theme-1', this)">Wood</button>
+    <button class="theme-btn" onclick="setTheme('theme-2', this)">Beach</button>
+    <button class="theme-btn" onclick="setTheme('theme-3', this)">Forest</button>
+  </div>
+
+  <script>
+    const display = document.getElementById('display');
+    let firstNumber = '';
+    let operator = '';
+    let secondNumber = '';
+    let justCalculated = false;
+
+    function updateScreen() {
+      if (firstNumber === 'Error') {
+        display.innerText = 'Error';
+        return;
+      }
+      if (operator === '') {
+        display.innerText = firstNumber || '0';
+      } else {
+        display.innerText = `${firstNumber} ${operator} ${secondNumber}`.trim();
+      }
+    }
+
+    function handlePress(value) {
+      if (value === 'C') {
+        firstNumber = '';
+        operator = '';
+        secondNumber = '';
+        justCalculated = false;
+        updateScreen();
+      } else if (value === 'DEL') {
+        if (firstNumber === 'Error' || justCalculated) {
+          firstNumber = '';
+          operator = '';
+          secondNumber = '';
+          justCalculated = false;
+        } else if (secondNumber !== '') {
+          secondNumber = secondNumber.slice(0, -1);
+        } else if (operator !== '') {
+          operator = '';
+        } else if (firstNumber !== '') {
+          firstNumber = firstNumber.slice(0, -1);
+        }
+        updateScreen();
+      } else if (!isNaN(value)) {
+        if (firstNumber === 'Error' || justCalculated) {
+          firstNumber = value;
+          operator = '';
+          secondNumber = '';
+          justCalculated = false;
+        } else if (operator === '') {
+          firstNumber = firstNumber === '0' ? value : firstNumber + value;
+        } else {
+          secondNumber = secondNumber === '0' ? value : secondNumber + value;
+        }
+        updateScreen();
+      } else if (value === '+' || value === '-' || value === 'x' || value === '÷') {
+        if (firstNumber === 'Error') return;
+        justCalculated = false;
+
+        if (firstNumber === '') {
+          firstNumber = '0';
+          operator = value;
+        } else if (operator !== '' && secondNumber !== '') {
+          const result = calculate(parseInt(firstNumber, 10), parseInt(secondNumber, 10), operator);
+          firstNumber = String(result);
+          secondNumber = '';
+          operator = result === 'Error' ? '' : value;
+        } else {
+          operator = value;
+        }
+        updateScreen();
+      } else if (value === '=') {
+        if (firstNumber !== '' && operator !== '' && secondNumber !== '') {
+          const result = calculate(parseInt(firstNumber, 10), parseInt(secondNumber, 10), operator);
+          firstNumber = String(result);
+          operator = '';
+          secondNumber = '';
+          justCalculated = true;
+          updateScreen();
+        }
+      }
+    }
+
+    function calculate(a, b, op) {
+      if (op === '+') return a + b;
+      if (op === '-') return a - b;
+      if (op === 'x') return a * b;
+      if (op === '÷') {
+        if (b === 0) return 'Error';
+        return Math.round((a / b) * 1000000000) / 1000000000;
+      }
+    }
+
+    function setTheme(themeClass, element) {
+      document.body.className = themeClass;
+      document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+    }  </script>
+
+</body>
+</html>
